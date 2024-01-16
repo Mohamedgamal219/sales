@@ -1,0 +1,86 @@
+﻿@* @{
+    ViewData["Title"] = "Home Page";
+}
+ *@
+@* <div class="text-center">
+    <h1 class="display-4">Welcome To Sales Of Samaqo Campany</h1>
+</div>
+<div class="text-center display-5"> Our Sections </div>
+<div class="d-flex flex-wrap mt-5 mb-3 justify-content-around">
+    <div class="card" style="width:fit-content;">
+        <div class="card-body">
+            <h5 class="card-title"> <a asp-controller="Products" asp-action="Index" class="btn btn-danger"> Product</a> </h5>
+        </div>
+    </div>
+    <div class="card" style="width:fit-content;">
+        <div class="card-body">
+            <h5 class="card-title"> <a asp-controller="Storages" asp-action="Index" class="btn btn-danger"> Storage</a> </h5>
+        </div>
+    </div>
+    <div class="card" style="width:fit-content;">
+        <div class="card-body" >
+            <h5 class="card-title"> <a asp-controller="Suppliers" asp-action="Index" class="btn btn-danger"> Supplier</a> </h5>
+        </div>
+    </div>
+</div> *@
+
+@using Microsoft.AspNetCore.Identity
+@model DsProductSupplier
+@inject UserManager<IdentityUser> Users
+@inject SignInManager<IdentityUser> Sign
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<form asp-action="Index" class="row row-cols-lg-auto g-3 align-items-center">
+    <div class="col-12">
+        <label class="visually-hidden" for="supplierid">Filter</label>
+        <select class="form-select" name="supplierid">
+            <option selected>Choose...</option>
+            @foreach (var item in Model.GetSuppliers)
+            {
+                <option value="@item.Id"> @item.SupplierName </option>
+            }
+        </select>
+    </div>
+
+    <div class="col-12">
+        <label class="visually-hidden" for="search">Search</label>
+        <div class="input-group">
+            <div class="input-group-text"></div>
+            <input type="text" class="form-control" name="search" placeholder="Search">
+        </div>
+    </div>
+
+    <div class="col-12">
+        <button type="submit" class="btn btn-primary">Search</button>
+        <a asp-action="Index" class="btn btn-primary">Reset</a>
+    </div>
+</form>
+
+<div class="d-flex flex-wrap mt-5 mb-3 justify-content-around">
+    @foreach (var item in Model.GetProducts)
+    {
+        <div class="card mt-3" style="width: 16rem;">
+            @* <img src="@item.ProdImage" class="card-img-top" alt="NoImage"> *@
+            <div class="card-body">
+                <h5 class="card-title">Product Name : @item.Name</h5>
+                <p class="card-text">Price : @item.Price </p>
+                <p class="card-text">Supplier Name : @item.SupplierName
+                <p class=" card-text">
+                        @if (item.StorageQuantity > 0)
+                        {
+                        <span> Avalible</span>
+                        }
+                        else
+                        {
+                        <span> Not Avalible</span>
+                        }
+                </p>
+                  
+                 <a asp-controller="SalesSheetDetails" asp-action="AddToSale" asp-route-id="@item.Id" class="btn btn-outline-primary"> Add To Cart</a>
+                    
+            </div>
+        </div>
+    }
+</div>

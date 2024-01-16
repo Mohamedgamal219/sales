@@ -1,0 +1,48 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@inject UserManager<IdentityUser> UserIdn
+@inject SignInManager<IdentityUser> SignMag
+@model Storage 
+
+@{
+    ViewData["Title"] = "Detials";  
+}
+
+
+
+<h1>Details</h1>
+
+<div>
+    <h4>Supplier</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Product
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProdName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Quantity)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Quantity)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DateOfStorage)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DateOfStorage)
+        </dd>
+    </dl>
+</div>
+<div>
+    @if (SignMag.IsSignedIn(User))
+    {
+        @if (User.IsInRole("Admin"))
+        {
+            <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a>
+        }
+
+    }
+    <a asp-action="Index">Back to List</a>
+</div>

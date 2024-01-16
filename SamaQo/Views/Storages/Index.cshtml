@@ -1,0 +1,77 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@inject UserManager<IdentityUser> UserManger
+@inject SignInManager<IdentityUser> SignManger
+@model IEnumerable<Storage>
+
+    @{
+        ViewData["Title"] = "List of Storage";
+    }
+
+<h1>Index</h1>
+<form asp-action="Index" class="row row-cols-lg-auto g-3 align-items-center">
+    <div class="col-12">
+        <label class="visually-hidden" for="search">Search</label>
+        <div class="input-group">
+            <div class="input-group-text"></div>
+            <input type="text" class="form-control" name="search" placeholder="Search">
+        </div>
+    </div>
+
+    <div class="col-12">
+        <button type="submit" class="btn btn-primary">Search</button>
+        <a asp-action="Index" class="btn btn-primary">Reset</a>
+    </div>
+</form>
+@if (SignManger.IsSignedIn(User))
+{
+        @if (User.IsInRole("Admin")) {
+            <a class="btn btn-success" asp-action="Create">Create New</a>
+        }
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Product Name
+            </th>
+             <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateOfStorage)
+            </th>
+            
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProdName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                     @item.DateOfStorage.ToString("dd-MM-yyyy")
+                </td>
+                @if (SignManger.IsSignedIn(User))
+                {
+                    <td>
+                        <a asp-action="Details" class="btn btn-primary" asp-route-id="@item.Id">Details</a>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a class="btn btn-success" asp-action="Create">Create New</a>
+                            <a class="btn btn-dark" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                            <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        }
+                    
+                </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>

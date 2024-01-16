@@ -1,0 +1,72 @@
+﻿@* @model IEnumerable<SalesSheetDetail>
+
+    @{
+        ViewData["Title"] = "Bill";
+    }
+
+<h2> Bill </h2>
+
+table class="table">
+<thead>
+    <tr>
+
+        <th>
+            @Html.DisplayNameFor(model => model.DateOfSale)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UintPrice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Total)
+        </th>
+        <th></th>
+    </tr>
+</thead>
+<tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td>
+                @item.DateOfSale.ToString("dd-MM-yyyy")
+            </td>
+            <td>
+                @item.ProName
+            </td>
+            <td>
+                @item.Quantity
+            </td>
+            <td>
+                @item.UintPrice
+            </td>
+            <td>
+                @item.Total
+            </td>
+
+            <td>
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+    }
+
+    <h2> Total Pill = @foreach(var it in Model)
+        {
+        <span> @it.Total += @it.Total </span>
+        }
+    </h2>
+
+    <form asp-action="Bill" class="row row-cols-lg-auto g-3 align-items-center">
+        <div class="col-12">
+            <div class="input-group">
+                <div class="input-group-text"></div>
+                <input type="button" class="form-control" placeholder="Submit">
+            </div>
+        </div>
+    </form>
+ *@

@@ -1,0 +1,83 @@
+﻿@model IEnumerable<SalesSheetDetail>
+
+@{
+    ViewData["Title"] = "List Of Data";
+}
+
+<form asp-action="Index" class="row row-cols-lg-auto g-3 align-items-center">
+    <div class="col-12">
+        <label class="visually-hidden" for="search">Search</label>
+        <div class="input-group">
+            <div class="input-group-text"></div>
+            <input type="date" class="form-control" name="search" placeholder="Search">
+        </div>
+    </div>
+
+    <div class="col-12">
+        <button type="submit" class="btn btn-primary">Search</button>
+        <a asp-action="Index" class="btn btn-primary">Reset</a>
+    </div>
+</form>
+
+<h1>Index</h1>
+
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<a asp-action="Index" asp-controller="Home" class="btn btn-outline-primary m-3">Products</a>
+<table class="table">
+    <thead>
+        <tr>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.DateOfSale)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UintPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Total)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                
+                <td>
+                    @item.DateOfSale.ToString("dd-MM-yyyy")
+                </td>
+                <td>
+                    @item.ProName
+                </td>
+                <td>
+                    @item.Quantity
+                </td>
+                <td>
+                    @item.UintPrice
+                </td>
+                <td>
+                    @item.Total
+                </td>
+
+                <td>
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+
+                
+               
+            </tr>
+        }
+    </tbody>
+</table>
+
